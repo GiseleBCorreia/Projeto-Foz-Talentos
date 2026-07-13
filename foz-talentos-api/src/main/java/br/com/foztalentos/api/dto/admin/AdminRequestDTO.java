@@ -1,4 +1,18 @@
 package br.com.foztalentos.api.dto.admin;
 
-public class AdminRequestDTO {
-}
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+public record AdminRequestDTO(
+
+        @NotBlank
+        String name,
+
+        @Email
+        @NotBlank
+        String email,
+
+        @NotBlank
+        String password
+
+) {}

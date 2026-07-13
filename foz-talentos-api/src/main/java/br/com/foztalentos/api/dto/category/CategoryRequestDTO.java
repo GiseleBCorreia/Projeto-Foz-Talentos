@@ -1,4 +1,10 @@
 package br.com.foztalentos.api.dto.category;
 
-public class CategoryRequestDTO {
-}
+import jakarta.validation.constraints.NotBlank;
+
+public record CategoryRequestDTO(
+
+        @NotBlank
+        String name
+
+) {}
