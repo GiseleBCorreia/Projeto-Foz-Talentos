@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Painel administrativo de vagas da Foz Talentos.">
+  <title>Painel Administrativo | Foz Talentos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-page">
+  <header class="admin-header">
+    <div class="container admin-header-inner">
+      <a class="logo" href="index.html"><img src="img/logo-foz-talentos.png" alt="Foz Talentos"></a>
+      <div class="admin-header-actions">
+        <a class="button button-outline" href="vagas.html" target="_blank" rel="noopener">Ver página pública</a>
+        <button class="button button-danger" id="logoutButton" type="button">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-dashboard container">
+    <section class="admin-welcome">
+      <div><span class="eyebrow">PAINEL ADMINISTRATIVO</span><h1>Gerenciamento de vagas</h1><p>Cadastre, edite, publique ou remova as oportunidades exibidas no site.</p></div>
+      <button class="button button-primary" id="newJobButton" type="button">+ Nova vaga</button>
+    </section>
+
+    <section class="admin-stats" aria-label="Resumo das vagas">
+      <article><span>Total</span><strong id="totalJobs">0</strong></article>
+      <article><span>Ativas</span><strong id="activeJobs">0</strong></article>
+      <article><span>Inativas</span><strong id="inactiveJobs">0</strong></article>
+    </section>
+
+    <section class="admin-panel-card">
+      <div class="admin-toolbar">
+        <label class="admin-search"><span class="sr-only">Pesquisar vagas</span><input id="searchInput" type="search" placeholder="Pesquisar por título, empresa ou local..."></label>
+        <select id="statusFilter" aria-label="Filtrar por status">
+          <option value="todos">Todos os status</option>
+          <option value="ativa">Ativas</option>
+          <option value="inativa">Inativas</option>
+        </select>
+      </div>
+      <div id="adminJobsList" class="admin-jobs-list"></div>
+      <div id="adminEmptyState" class="empty-state" hidden><span>📋</span><h2>Nenhuma vaga encontrada</h2><p>Cadastre uma nova vaga ou altere os filtros.</p></div>
+    </section>
+  </main>
+
+  <div class="modal" id="jobModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header"><div><span class="eyebrow">VAGA</span><h2 id="modalTitle">Nova vaga</h2></div><button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button></div>
+      <form id="jobForm" class="job-form">
+        <input type="hidden" id="jobId">
+        <div class="form-grid two">
+          <label>Título da vaga<input id="jobTitle" type="text" required maxlength="100"></label>
+          <label>Empresa<input id="jobCompany" type="text" required maxlength="100"></label>
+        </div>
+        <div class="form-grid three">
+          <label>Localização<input id="jobLocation" type="text" required maxlength="100" placeholder="Foz do Iguaçu - PR"></label>
+          <label>Tipo de contrato<select id="jobContract" required><option value="">Selecione</option><option>CLT</option><option>PJ</option><option>Estágio</option><option>Temporário</option><option>Freelancer</option></select></label>
+          <label>Modalidade<select id="jobMode" required><option value="">Selecione</option><option>Presencial</option><option>Híbrido</option><option>Remoto</option></select></label>
+        </div>
+        <div class="form-grid two">
+          <label>Salário<input id="jobSalary" type="text" maxlength="60" placeholder="Ex.: R$ 2.500,00 ou A combinar"></label>
+          <label>Status<select id="jobStatus" required><option value="ativa">Ativa</option><option value="inativa">Inativa</option></select></label>
+        </div>
+        <label>Descrição<textarea id="jobDescription" rows="4" required maxlength="1200"></textarea></label>
+        <label>Requisitos <small>(um por linha)</small><textarea id="jobRequirements" rows="5" required></textarea></label>
+        <label>Benefícios <small>(um por linha)</small><textarea id="jobBenefits" rows="4"></textarea></label>
+        <div class="form-grid two">
+          <label>WhatsApp para candidatura<input id="jobWhatsapp" type="tel" placeholder="5545999999999" inputmode="numeric"></label>
+          <label>E-mail para candidatura<input id="jobEmail" type="email" placeholder="vagas@foztalentos.com.br"></label>
+        </div>
+        <p id="formMessage" class="form-message" aria-live="polite"></p>
+        <div class="modal-actions"><button class="button button-outline" type="button" data-close-modal>Cancelar</button><button class="button button-primary" type="submit">Salvar vaga</button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/vagas-service.js"></script>
+  <script src="js/admin-painel.js"></script>
+</body>
+</html>

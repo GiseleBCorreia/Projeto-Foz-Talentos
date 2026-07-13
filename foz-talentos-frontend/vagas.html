@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Vagas disponíveis na Foz Talentos.">
+  <title>Vagas | Foz Talentos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header"><div class="container nav"><a class="logo" href="index.html"><img src="img/logo-foz-talentos.png" alt="Foz Talentos"></a><button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false" id="menuButton"><span></span><span></span><span></span></button><nav class="nav-links"><a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="servicos.html">Serviços</a><a class="active-page" href="vagas.html">Vagas</a><a href="contato.html">Contato</a><a class="admin-link" href="admin-login.html">Login ADM</a></nav></div></header>
+<main>
+  <section class="section jobs">
+    <div class="container">
+      <div class="section-heading"><div><span class="eyebrow">VAGAS DISPONÍVEIS</span><h1 class="page-title">Encontre sua próxima oportunidade</h1></div><p>Confira as oportunidades abertas e candidate-se pelos canais indicados.</p></div>
+      <div class="public-job-filters"><input id="publicSearch" type="search" placeholder="Pesquisar vaga, empresa ou cidade..."><select id="publicModeFilter"><option value="todos">Todas as modalidades</option><option>Presencial</option><option>Híbrido</option><option>Remoto</option></select></div>
+      <p class="jobs-result-count" id="jobsResultCount"></p>
+      <div class="public-job-grid" id="publicJobsList"></div>
+      <div class="empty-state" id="publicEmptyState" hidden><span>🔎</span><h2>Nenhuma vaga disponível</h2><p>Não encontramos oportunidades com os filtros selecionados.</p></div>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="container footer-grid"><div><a class="logo footer-logo" href="index.html"><img src="img/logo-foz-talentos-rodape.png" alt="Foz Talentos"></a><p>Conectamos talentos às melhores oportunidades.</p></div><div><strong>Navegação</strong><a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="servicos.html">Serviços</a><a href="vagas.html">Vagas</a><a href="contato.html">Contato</a></div><div><strong>Contato</strong><span>(45) 99999-9999</span><span>contato@foztalentos.com.br</span><span>Foz do Iguaçu - PR</span></div></div><div class="container copyright">© 2026 Foz Talentos. Todos os direitos reservados.</div></footer>
+<div class="modal" id="jobDetailsModal" aria-hidden="true"><div class="modal-backdrop" data-close-details></div><section class="modal-card public-details" role="dialog" aria-modal="true" aria-labelledby="detailsTitle"><div class="modal-header"><div><span class="eyebrow">DETALHES DA VAGA</span><h2 id="detailsTitle"></h2></div><button class="modal-close" type="button" data-close-details aria-label="Fechar">×</button></div><div id="jobDetailsContent"></div></section></div>
+<script src="js/vagas-service.js"></script><script src="js/vagas.js"></script>
+</body>
+</html>
