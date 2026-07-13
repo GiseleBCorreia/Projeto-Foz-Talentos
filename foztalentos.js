@@ -540,4 +540,439 @@
                             // Fechar todos
                             items.forEach(i => {
                                 i.classList.remove('active');
+                                const b = i.querySelector('.accordion-body');
+                                if (b) {
+                                    b.style.maxHeight = '0';
+                                    b.style.padding = '0 15px';
+                                }
+                            });
+                        }
+
+                        if (isOpen) {
+                            item.classList.remove('active');
+                            body.style.maxHeight = '0';
+                            body.style.padding = '0 15px';
+                        } else {
+                            item.classList.add('active');
+                            body.style.maxHeight = body.scrollHeight + 'px';
+                            body.style.padding = '15px';
+                        }
+                    });
+                });
+            });
+        }
+    };
+
+    // ============================================
+    // 7. ABAS / TABS
+    // ============================================
+    const Tabs = {
+        init() {
+            document.querySelectorAll('.tabs').forEach(tabs => {
+                const triggers = tabs.querySelectorAll('.tab-trigger');
+                const contents = tabs.querySelectorAll('.tab-content');
+
+                if (triggers.length === 0 || contents.length === 0) return;
+
+                triggers.forEach((trigger, index) => {
+                    trigger.addEventListener('click', () => {
+                        // Remover ativos
+                        triggers.forEach(t => t.classList.remove('active'));
+                        contents.forEach(c => c.classList.remove('active'));
+
+                        // Ativar
+                        trigger.classList.add('active');
+                        if (contents[index]) {
+                            contents[index].classList.add('active');
+                        }
+                    });
+                });
+
+                // Ativar primeira aba
+                if (triggers[0]) triggers[0].classList.add('active');
+                if (contents[0]) contents[0].classList.add('active');
+            });
+        }
+    };
+
+    // ============================================
+    // 8. TOOLTIP
+    // ============================================
+    const Tooltip = {
+        init() {
+            document.querySelectorAll('[data-tooltip]').forEach(element => {
+                const tooltipText = element.dataset.tooltip;
+                let tooltipEl = null;
+
+                const showTooltip = (e) => {
+                    if (tooltipEl) return;
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.className = 'tooltip-custom';
+                    tooltipEl.textContent = tooltipText;
+                    tooltipEl.style.cssText = `
+                        position: fixed;
+                        background: #333;
+                        color: #fff;
+                        padding: 6px 12px;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        z-index: 9999;
+                        pointer-events: none;
+                        opacity: 0;
+                        transition: opacity 0.2s;
+                        max-width: 250px;
+                        text-align: center;
+                        white-space: nowrap;
+                    `;
+                    document.body.appendChild(tooltipEl);
+
+                    const rect = element.getBoundingClientRect();
+                    tooltipEl.style.left = (rect.left + rect.width / 2 - tooltipEl.offsetWidth / 2) + 'px';
+                    tooltipEl.style.top = (rect.top - tooltipEl.offsetHeight - 8) + 'px';
+                    tooltipEl.style.opacity = '1';
+                };
+
+                const hideTooltip = () => {
+                    if (tooltipEl) {
+                        tooltipEl.remove();
+                        tooltipEl = null;
+                    }
+                };
+
+                element.addEventListener('mouseenter', showTooltip);
+                element.addEventListener('mouseleave', hideTooltip);
+                element.addEventListener('click', hideTooltip);
+            });
+        }
+    };
+
+    // ============================================
+    // 9. MODAL
+    // ============================================
+    const Modal = {
+        init() {
+            // Abrir modais
+            document.querySelectorAll('[data-modal-open]').forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const modalId = trigger.dataset.modalOpen;
+                    const modal = document.getElementById(modalId);
+                    if (modal) this.open(modal);
+                });
+            });
+
+            // Fechar modais
+            document.querySelectorAll('[data-modal-close]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const modal = btn.closest('.modal');
+                    if (modal) this.close(modal);
+                });
+            });
+
+            // Fechar ao clicar no overlay
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        this.close(modal);
+                    }
+                });
+            });
+
+            // Fechar com ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal.active').forEach(modal => {
+                        this.close(modal);
+                    });
+                }
+            });
+        },
+
+        open(modal) {
+            modal.classList.add('active');
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+            document.body.style.overflow = 'hidden';
+
+            // Animação de entrada
+            const content = modal.querySelector('.modal-content');
+            if (content) {
+                content.style.transform = 'scale(0.9)';
+                content.style.opacity = '0';
+                setTimeout(() => {
+                    content.style.transform = 'scale(1)';
+                    content.style.opacity = '1';
+                }, 10);
+            }
+        },
+
+        close(modal) {
+            const content = modal.querySelector('.modal-content');
+            if (content) {
+                content.style.transform = 'scale(0.9)';
+                content.style.opacity = '0';
+            }
+            setTimeout(() => {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 200);
+        }
+    };
+
+    // ============================================
+    // 10. SCROLL ANIMATIONS
+    // ============================================
+    const ScrollAnimation = {
+        init() {
+            const elements = document.querySelectorAll('[data-animate]');
+            if (elements.length === 0) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const animation = el.dataset.animate;
+                        const delay = parseInt(el.dataset.delay) || 0;
+
+                        setTimeout(() => {
+                            el.classList.add('animated', animation);
+                        }, delay);
+
+                        observer.unobserve(el);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            elements.forEach(el => observer.observe(el));
+        }
+    };
+
+    // ============================================
+    // 11. BACK TO TOP
+    // ============================================
+    const BackToTop = {
+        init() {
+            const btn = document.getElementById('back-to-top');
+            if (!btn) return;
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    btn.classList.add('visible');
+                    btn.style.display = 'flex';
+                } else {
+                    btn.classList.remove('visible');
+                    btn.style.display = 'none';
+                }
+            });
+
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    };
+
+    // ============================================
+    // 12. COUNTER ANIMATION
+    // ============================================
+    const Counter = {
+        init() {
+            document.querySelectorAll('[data-counter]').forEach(counter => {
+                const target = parseInt(counter.dataset.counter);
+                const duration = parseInt(counter.dataset.duration) || 2000;
+                const suffix = counter.dataset.suffix || '';
+                const prefix = counter.dataset.prefix || '';
+                let current = 0;
+                const step = Math.ceil(target / (duration / 16));
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.animate(counter, target, current, step, suffix, prefix);
+                            observer.unobserve(counter);
+                        }
+                    });
+                });
+
+                observer.observe(counter);
+            });
+        },
+
+        animate(element, target, current, step, suffix, prefix) {
+            if (current >= target) {
+                element.textContent = prefix + target + suffix;
+                return;
+            }
+
+            current += step;
+            if (current > target) current = target;
+            element.textContent = prefix + current + suffix;
+
+            requestAnimationFrame(() => {
+                this.animate(element, target, current, step, suffix, prefix);
+            });
+        }
+    };
+
+    // ============================================
+    // 13. FILTRO DE VAGAS (frontend apenas)
+    // ============================================
+    const JobFilter = {
+        init() {
+            const container = document.querySelector('.jobs-grid');
+            const searchInput = document.getElementById('search-jobs');
+            const filters = document.querySelectorAll('.job-filter');
+
+            if (!container) return;
+
+            const filterJobs = () => {
+                const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+                const activeFilters = {};
+
+                filters.forEach(filter => {
+                    if (filter.value && filter.value !== '') {
+                        const key = filter.dataset.filter || filter.name;
+                        activeFilters[key] = filter.value;
+                    }
+                });
+
+                const items = container.querySelectorAll('.job-item');
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    let show = true;
+
+                    // Busca por texto
+                    if (searchTerm) {
+                        const text = item.textContent.toLowerCase();
+                        if (!text.includes(searchTerm)) show = false;
+                    }
+
+                    // Filtros
+                    if (show && activeFilters.city) {
+                        const city = item.dataset.city || '';
+                        if (!city.toLowerCase().includes(activeFilters.city.toLowerCase())) show = false;
+                    }
+
+                    if (show && activeFilters.type) {
+                        const type = item.dataset.type || '';
+                        if (type !== activeFilters.type) show = false;
+                    }
+
+                    if (show && activeFilters.modality) {
+                        const modality = item.dataset.modality || '';
+                        if (modality !== activeFilters.modality) show = false;
+                    }
+
+                    if (show && activeFilters.area) {
+                        const area = item.dataset.area || '';
+                        if (!area.toLowerCase().includes(activeFilters.area.toLowerCase())) show = false;
+                    }
+
+                    item.style.display = show ? '' : 'none';
+                    if (show) visibleCount++;
+                });
+
+                // Mostrar mensagem de nenhum resultado
+                const noResults = container.querySelector('.no-results');
+                if (noResults) {
+                    noResults.style.display = visibleCount === 0 ? '' : 'none';
+                }
+            };
+
+            // Eventos
+            if (searchInput) {
+                searchInput.addEventListener('input', Utils.debounce(filterJobs, 300));
+            }
+
+            filters.forEach(filter => {
+                filter.addEventListener('change', filterJobs);
+                filter.addEventListener('input', filterJobs);
+            });
+
+            // Botão limpar filtros
+            document.querySelector('.clear-filters')?.addEventListener('click', () => {
+                filters.forEach(f => f.value = '');
+                if (searchInput) searchInput.value = '';
+                filterJobs();
+            });
+        }
+    };
+
+    // ============================================
+    // 14. UTILITÁRIOS (debounce, etc)
+    // ============================================
+    const Utils = {
+        debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        },
+
+        // Máscaras
+        maskCPF(value) {
+            return value.replace(/\D/g, '')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+                .replace(/(-\d{2})\d+?$/, '$1');
+        },
+
+        maskPhone(value) {
+            value = value.replace(/\D/g, '');
+            if (value.length <= 10) {
+                return value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+            } else {
+                return value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            }
+        },
+
+        maskDate(value) {
+            return value.replace(/\D/g, '')
+                .replace(/(\d{2})(\d)/, '$1/$2')
+                .replace(/(\d{2})(\d)/, '$1/$2')
+                .replace(/(\d{4})\d+?$/, '$1');
+        },
+
+        maskCurrency(value) {
+            value = value.replace(/\D/g, '');
+            value = (parseInt(value) / 100).toFixed(2);
+            return 'R$ ' + value.replace('.', ',');
+        }
+    };
+
+    // ============================================
+    // 15. INICIALIZAÇÃO
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Foz Talentos - Frontend Iniciado');
+
+        // Inicializar todos os módulos
+        MobileMenu.init();
+        DropdownMenu.init();
+        Carousel.init('.carousel');
+        FormValidator.init();
+        InputMask.init();
+        Accordion.init();
+        Tabs.init();
+        Tooltip.init();
+        Modal.init();
+        ScrollAnimation.init();
+        BackToTop.init();
+        Counter.init();
+        JobFilter.init();
+
+        console.log('✅ Foz Talentos - Frontend Pronto!');
+    });
+
+})();
            
