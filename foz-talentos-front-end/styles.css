@@ -669,7 +669,7 @@ main > .hero:last-child {
 .header .nav { height: 72px; }
 
 /* Espaçamento padrão das seções */
-.section { padding: 64px 0; }
+.section { padding: 45px 0; }
 main > section:last-child { margin-bottom: 56px; }
 
 /* Hero (Início) */
