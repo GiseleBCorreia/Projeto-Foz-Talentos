@@ -13,7 +13,19 @@
 
 <body>
 <!-- Menu de navegação: Início -->
-<header class="header"><div class="container nav"><a class="logo" href="index.html"><img src="img/logo-foz-talentos.png" alt="Foz Talentos"></a><button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false" id="menuButton"><span></span><span></span><span></span></button><nav class="nav-links"><a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="servicos.html">Serviços</a><a class="active-page" href="vagas.html">Vagas</a><a href="contato.html">Contato</a><a class="admin-link" href="admin-login.html">Login ADM</a></nav>
+<header class="header">
+  <div class="container nav">
+    <a class="logo" href="index.html"><img src="img/logo-foz-talentos.png" alt="Foz Talentos"></a>
+    <button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false" id="menuButton"><span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links">
+  <a href="index.html">Início</a>
+  <a href="sobre.html">Sobre</a>
+  <a href="servicos.html">Serviços</a>
+  <a href="contato.html">Contato</a>
+  <a class="admin-link" href="admin-login.html">Login ADM</a>
+</nav>
+    <a class="button button-primary nav-cta" href="vagas.html">Ver vagas</a>
 </div>
 </header>
 <!-- Menu de navegação: Fim -->
@@ -21,15 +33,130 @@
 <!--Conteúdo principal - Filtro de vagas: Início-->
 <main>
   <section class="section jobs">
-    <div class="container">
-      <div class="section-heading"><div><span class="eyebrow">VAGAS DISPONÍVEIS</span><h1 class="page-title">Encontre sua próxima oportunidade</h1></div><p>Confira as oportunidades abertas e candidate-se pelos canais indicados.</p></div>
-      <div class="public-job-filters"><input id="publicSearch" type="search" placeholder="Pesquisar vaga, empresa ou cidade..."><select id="publicModeFilter"><option value="todos">Todas as modalidades</option><option>Presencial</option><option>Híbrido</option><option>Remoto</option></select></div>
-      <p class="jobs-result-count" id="jobsResultCount"></p>
-      <div class="public-job-grid" id="publicJobsList"></div>
-      <div class="empty-state" id="publicEmptyState" hidden><h2>Nenhuma vaga disponível</h2><p>Não encontramos oportunidades com os filtros selecionados.</p></div>
+    <div class="container jobs-layout">
+
+      <!-- Sidebar de filtros -->
+      <aside class="jobs-sidebar">
+
+        <div class="filter-group">
+          <h3>Modalidade</h3>
+
+          <label>
+            <input type="checkbox" class="modalidade-filter" value="Remoto">
+            Remoto
+          </label>
+
+          <label>
+            <input type="checkbox" class="modalidade-filter" value="Presencial">
+            Presencial
+          </label>
+
+          <label>
+            <input type="checkbox" class="modalidade-filter" value="Híbrido">
+            Híbrido
+          </label>
+        </div>
+
+        <hr>
+
+        <div class="filter-group">
+          <h3>Modelo de contrato</h3>
+
+          <label>
+            <input type="checkbox" class="contrato-filter" value="Temporário">
+            Temporário
+          </label>
+
+          <label>
+            <input type="checkbox" class="contrato-filter" value="Efetivo">
+            Efetivo
+          </label>
+        </div>
+
+        <button id="clearFilters" class="btn-outline" type="button">
+        Limpar filtros
+        </button>
+
+      </aside>
+
+      <!-- Conteúdo -->
+      <div class="jobs-content">
+
+        <div class="public-job-filters">
+
+          <select id="publicStateFilter">
+            <option value="">Todos os estados</option>
+
+            <option>Acre</option>
+            <option>Alagoas</option>
+            <option>Amapá</option>
+            <option>Amazonas</option>
+            <option>Bahia</option>
+            <option>Ceará</option>
+            <option>Distrito Federal</option>
+            <option>Espírito Santo</option>
+            <option>Goiás</option>
+            <option>Maranhão</option>
+            <option>Mato Grosso</option>
+            <option>Mato Grosso do Sul</option>
+            <option>Minas Gerais</option>
+            <option>Pará</option>
+            <option>Paraíba</option>
+            <option>Paraná</option>
+            <option>Pernambuco</option>
+            <option>Piauí</option>
+            <option>Rio de Janeiro</option>
+            <option>Rio Grande do Norte</option>
+            <option>Rio Grande do Sul</option>
+            <option>Rondônia</option>
+            <option>Roraima</option>
+            <option>Santa Catarina</option>
+            <option>São Paulo</option>
+            <option>Sergipe</option>
+            <option>Tocantins</option>
+          </select>
+
+          <select id="publicAreaFilter">
+            <option value="">Todas as áreas</option>
+            <option value="Administrativo">Administrativo</option>
+            <option value="Atendimento">Atendimento</option>
+            <option value="Comercial">Comercial</option>
+            <option value="Contabilidade">Contabilidade</option>
+            <option value="Engenharia">Engenharia</option>
+            <option value="Financeiro">Financeiro</option>
+            <option value="Jurídico">Jurídico</option>
+            <option value="Logística">Logística</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Produção">Produção</option>
+            <option value="Recursos Humanos">Recursos Humanos</option>
+            <option value="Saúde">Saúde</option>
+            <option value="Tecnologia da Informação">Tecnologia da Informação</option>
+            <option value="Vendas">Vendas</option>
+          </select>
+
+          <input
+            id="publicSearch"
+            type="search"
+            placeholder="Pesquisar vaga, empresa ou cidade..."
+          >
+
+        </div>
+
+        <p class="jobs-result-count" id="jobsResultCount"></p>
+
+        <div class="public-job-grid" id="publicJobsList"></div>
+
+        <div class="empty-state" id="publicEmptyState" hidden>
+          <h2>Nenhuma vaga disponível</h2>
+          <p>Não encontramos oportunidades com os filtros selecionados.</p>
+        </div>
+
+      </div>
+
     </div>
   </section>
 </main>
+<!--Conteúdo principal - Filtro de vagas: Fim-->
 
 <!--Rodapé: Início-->
 <footer class="footer">
@@ -62,8 +189,9 @@
 </div>
 
 
-
-<script src="js/vagas-service.js"></script><script src="js/vagas.js"></script>
+<script src="js/vagas-service.js"></script>
+<script src="js/vagas.js"></script>
+<script src="js/filtros-vagas.js"></script>
 
 </body>
 </html>
