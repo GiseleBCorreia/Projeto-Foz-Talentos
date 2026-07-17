@@ -7,7 +7,7 @@ public record AdminResponseDTO(
         Long id,
         String name,
         String email,
-        String role,
+        @jakarta.validation.constraints.NotNull Enum role,
         Boolean active,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
