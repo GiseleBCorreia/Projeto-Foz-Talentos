@@ -1,5 +1,6 @@
 package br.com.foztalentos.api.service;
 
+import br.com.foztalentos.api.dto.job.JobFilterDTO;
 import br.com.foztalentos.api.dto.job.JobRequestDTO;
 import br.com.foztalentos.api.dto.job.JobResponseDTO;
 import br.com.foztalentos.api.entity.Category;
@@ -18,7 +19,7 @@ public class JobService {
 
     private final JobRepository jobRepository;
     private final CategoryRepository categoryRepository;
-    
+
     public JobResponseDTO create(JobRequestDTO request) {
 
         Category category = categoryRepository.findById(request.categoryId())
@@ -113,7 +114,7 @@ public class JobService {
         return null;
     }
 
-    public List<JobResponseDTO> filter() {
+    public List<JobResponseDTO> filter(JobFilterDTO filter) {
         return null;
     }
 

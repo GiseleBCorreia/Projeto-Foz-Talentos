@@ -41,7 +41,7 @@ public class AdminService {
 
     }
 
-    public AdminResponseDTO findById(Long id) {
+    public static AdminResponseDTO findById(Long id) {
 
         Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Admin not found."));
