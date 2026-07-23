@@ -3,6 +3,8 @@ package br.com.foztalentos.api.service;
 import br.com.foztalentos.api.dto.category.CategoryRequestDTO;
 import br.com.foztalentos.api.dto.category.CategoryResponseDTO;
 import br.com.foztalentos.api.entity.Category;
+import br.com.foztalentos.api.exception.BusinessException;
+import br.com.foztalentos.api.exception.ResourceNotFoundException;
 import br.com.foztalentos.api.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,11 @@ public class CategoryService {
 
         category.setActive(true);
         category.setCreatedAt(LocalDateTime.now());
+        category.setName(request.name());
+
+        if (categoryRepository.existsByNameIgnoreCase(request.name())) {
+            throw new BusinessException("Category already exists");
+        }
 
         Category savedCategory = categoryRepository.save(category);
 
@@ -39,14 +46,14 @@ public class CategoryService {
 
     public CategoryResponseDTO findById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
 
         return toResponseDTO(category);
     }
 
     public CategoryResponseDTO update(Long id, CategoryRequestDTO request) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
 
         category.setName(request.name());
 
@@ -57,7 +64,7 @@ public class CategoryService {
 
     public void deactivate(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
 
         category.setActive(false);
 

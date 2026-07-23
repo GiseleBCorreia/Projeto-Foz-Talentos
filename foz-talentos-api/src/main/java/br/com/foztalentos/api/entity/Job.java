@@ -22,7 +22,7 @@ import java.util.List;
 @Entity
 @Table(name = "jobs")
 public class Job {
-
+    
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

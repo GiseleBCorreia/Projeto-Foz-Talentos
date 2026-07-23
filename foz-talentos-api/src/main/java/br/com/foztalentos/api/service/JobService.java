@@ -5,8 +5,11 @@ import br.com.foztalentos.api.dto.job.JobRequestDTO;
 import br.com.foztalentos.api.dto.job.JobResponseDTO;
 import br.com.foztalentos.api.entity.Category;
 import br.com.foztalentos.api.entity.Job;
+import br.com.foztalentos.api.exception.BusinessException;
+import br.com.foztalentos.api.exception.ResourceNotFoundException;
 import br.com.foztalentos.api.repository.CategoryRepository;
 import br.com.foztalentos.api.repository.JobRepository;
+import br.com.foztalentos.api.specification.JobSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +26,7 @@ public class JobService {
     public JobResponseDTO create(JobRequestDTO request) {
 
         Category category = categoryRepository.findById(request.categoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
 
         Job job = new Job();
 
@@ -45,6 +48,10 @@ public class JobService {
         job.setCreatedAt(LocalDateTime.now());
         job.setUpdatedAt(LocalDateTime.now());
 
+        if(request.salary().isBlank()){
+            throw new BusinessException("Salary is required.");
+        }
+
         Job savedJob = jobRepository.save(job);
 
         return toResponseDTO(savedJob);
@@ -60,10 +67,19 @@ public class JobService {
 
     }
 
+    public List<JobResponseDTO> filter(JobFilterDTO filter) {
+
+        return jobRepository.findAll(JobSpecification.filter(filter))
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+
+    }
+
     public JobResponseDTO findById(Long id) {
 
         Job job = jobRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Job not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found."));
 
         return toResponseDTO(job);
 
@@ -72,10 +88,10 @@ public class JobService {
     public JobResponseDTO update(Long id, JobRequestDTO request) {
 
         Job job = jobRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Job not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found."));
 
         Category category = categoryRepository.findById(request.categoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
 
         job.setTitle(request.title());
         job.setCompany(request.company());
@@ -101,21 +117,13 @@ public class JobService {
     public void deactivate(Long id) {
 
         Job job = jobRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Job not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found."));
 
         job.setActive(false);
         job.setUpdatedAt(LocalDateTime.now());
 
         jobRepository.save(job);
 
-    }
-
-    public List<JobResponseDTO> search(String search) {
-        return null;
-    }
-
-    public List<JobResponseDTO> filter(JobFilterDTO filter) {
-        return null;
     }
 
     private JobResponseDTO toResponseDTO(Job job) {

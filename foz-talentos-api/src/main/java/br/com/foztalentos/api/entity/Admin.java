@@ -1,5 +1,6 @@
 package br.com.foztalentos.api.entity;
 
+import br.com.foztalentos.api.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -36,7 +37,8 @@ public class Admin {
     private String password;
 
     @NotNull
-    private Enum role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @NotNull
     private Boolean active = true;

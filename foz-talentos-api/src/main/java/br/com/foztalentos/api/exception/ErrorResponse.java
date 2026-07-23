@@ -1,4 +1,13 @@
 package br.com.foztalentos.api.exception;
 
-public class ErrorResponse {
-}
+import java.time.LocalDateTime;
+
+public record ErrorResponse (
+
+    LocalDateTime timestamp,
+    Integer Status,
+    String message,
+    String path
+
+    )
+{}

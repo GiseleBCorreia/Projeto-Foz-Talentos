@@ -1,6 +1,7 @@
 package br.com.foztalentos.api.controller;
 
 import br.com.foztalentos.api.constant.ApiRoutes;
+import br.com.foztalentos.api.dto.job.JobFilterDTO;
 import br.com.foztalentos.api.dto.job.JobRequestDTO;
 import br.com.foztalentos.api.dto.job.JobResponseDTO;
 import br.com.foztalentos.api.service.JobService;
@@ -28,6 +29,13 @@ public class JobController {
         @GetMapping("/{id}")
         public ResponseEntity<JobResponseDTO> findById( @PathVariable Long id) {
             return ResponseEntity.ok(jobService.findById(id));
+        }
+
+        @GetMapping("/filter")
+        public ResponseEntity<List<JobResponseDTO>> filter(@ModelAttribute JobFilterDTO filter) {
+
+            return ResponseEntity.ok(jobService.filter(filter));
+
         }
 
         @PostMapping
