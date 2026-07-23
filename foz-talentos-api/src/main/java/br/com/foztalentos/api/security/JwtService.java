@@ -1,4 +1,50 @@
 package br.com.foztalentos.api.security;
 
+import br.com.foztalentos.api.entity.Admin;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+
+@Service
 public class JwtService {
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Value("${jwt.expiration}")
+    private Long expiration;
+
+    private SecretKey getKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public String generateToken(Admin admin) {
+
+        return Jwts.builder().subject(admin.getEmail()).claim("role", admin.getRole().name())
+                .issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getKey()).compact();
+
+    }
+
+    public String extractEmail(String token) {
+
+        Claims claims = Jwts.parser().verifyWith(getKey())
+                .build().parseSignedClaims(token).getPayload();
+
+        return claims.getSubject();
+
+    }
+
+    public boolean isTokenValid(String token, Admin admin) {
+
+        return extractEmail(token).equals(admin.getEmail());
+
+    }
+
 }

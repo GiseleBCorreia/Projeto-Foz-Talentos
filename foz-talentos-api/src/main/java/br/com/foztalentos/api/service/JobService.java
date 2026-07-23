@@ -41,9 +41,7 @@ public class JobService {
         job.setBenefits(request.benefits());
         job.setPhone(request.phone());
         job.setEmail(request.email());
-
         job.setCategory(category);
-
         job.setActive(true);
         job.setCreatedAt(LocalDateTime.now());
         job.setUpdatedAt(LocalDateTime.now());
@@ -60,26 +58,19 @@ public class JobService {
 
     public List<JobResponseDTO> findAll() {
 
-        return jobRepository.findAll()
-                .stream()
-                .map(this::toResponseDTO)
-                .toList();
-
+        return jobRepository.findAll().stream().map(this::toResponseDTO).toList();
     }
 
     public List<JobResponseDTO> filter(JobFilterDTO filter) {
 
         return jobRepository.findAll(JobSpecification.filter(filter))
-                .stream()
-                .map(this::toResponseDTO)
-                .toList();
-
+                .stream().map(this::toResponseDTO).toList();
     }
 
     public JobResponseDTO findById(Long id) {
 
-        Job job = jobRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Job not found."));
+        Job job = jobRepository.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException("Job not found."));
 
         return toResponseDTO(job);
 
@@ -87,11 +78,11 @@ public class JobService {
 
     public JobResponseDTO update(Long id, JobRequestDTO request) {
 
-        Job job = jobRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Job not found."));
+        Job job = jobRepository.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException("Job not found."));
 
-        Category category = categoryRepository.findById(request.categoryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
+        Category category = categoryRepository.findById(request.categoryId()).orElseThrow(()
+                -> new ResourceNotFoundException("Category not found."));
 
         job.setTitle(request.title());
         job.setCompany(request.company());
@@ -116,8 +107,8 @@ public class JobService {
 
     public void deactivate(Long id) {
 
-        Job job = jobRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Job not found."));
+        Job job = jobRepository.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException("Job not found."));
 
         job.setActive(false);
         job.setUpdatedAt(LocalDateTime.now());
