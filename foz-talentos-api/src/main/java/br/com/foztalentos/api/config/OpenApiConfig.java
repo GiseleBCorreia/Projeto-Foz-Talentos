@@ -16,7 +16,6 @@ import java.util.List;
 @Configuration
 public class OpenApiConfig {
 
-    // Registra as metainformações exibidas no Swagger UI
     @Bean
     public OpenAPI customOpenAPI() {
 
@@ -24,35 +23,39 @@ public class OpenApiConfig {
 
         return new OpenAPI()
 
-                // Servidor de produção (Railway)
-                .servers(List.of(new Server()
+                // FORÇA O SWAGGER A USAR HTTPS
+                .servers(List.of(
+                        new Server()
                                 .url("https://foz-talentos-api-production.up.railway.app")
-                                .description("Production Server")))
+                                .description("Production")
+                ))
 
                 .info(new Info()
-                                .title("Foz Talentos API")
-                                .version("1.0")
-                                .description("""
-                                        API responsável pelo gerenciamento de:
-                                        - Administradores
-                                        - Categorias
-                                        - Vagas
-                                        - Autenticação JWT
-                                        """)
-                                .contact(new Contact()
-                                        .name("Equipe Foz Talentos")
-                                        .email("contato@foztalentos.com"))
-                                .license(new License().name("MIT")))
+                        .title("Foz Talentos API")
+                        .version("1.0")
+                        .description("""
+                                API responsável pelo gerenciamento de:
+                                - Administradores
+                                - Categorias
+                                - Vagas
+                                - Autenticação JWT
+                                """)
+                        .contact(new Contact()
+                                .name("Equipe Foz Talentos")
+                                .email("contato@foztalentos.com"))
+                        .license(new License().name("MIT")))
 
-                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+                .addSecurityItem(new SecurityRequirement()
+                        .addList(securitySchemeName))
 
-                .components(new Components().addSecuritySchemes(securitySchemeName,
-                            new SecurityScheme()
-                                    .name(securitySchemeName)
-                                    .type(SecurityScheme.Type.HTTP)
-                                    .scheme("bearer")
-                                    .bearerFormat("JWT")
-                                )
-                );
+                .components(new Components()
+                        .addSecuritySchemes(
+                                securitySchemeName,
+                                new SecurityScheme()
+                                        .name(securitySchemeName)
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")
+                        ));
     }
 }
