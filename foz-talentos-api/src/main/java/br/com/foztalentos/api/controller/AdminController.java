@@ -20,7 +20,7 @@ import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping(ApiRoutes.ADMINS)
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('MASTER')")
+@PreAuthorize("hasAuthority('ROLE_MASTER')")
 @Tag(name = "Administradores")
 public class AdminController {
     

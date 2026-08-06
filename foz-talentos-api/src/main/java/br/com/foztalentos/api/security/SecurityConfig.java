@@ -40,9 +40,9 @@ public class SecurityConfig {
                                         "/webjars/**",
                                         "/swagger-resources/**"
                                 ).permitAll().requestMatchers(HttpMethod.GET, "/jobs/**").permitAll()
-                                .requestMatchers("/admins/**").hasRole("MASTER")
-                                .requestMatchers("/categories/**").hasRole("MASTER")
-                                .requestMatchers("/jobs/**").hasAnyRole("MASTER", "EMPLOYEE")
+                            .requestMatchers("/admins", "/admins/**").hasRole("MASTER")
+                            .requestMatchers("/categories", "/categories/**").hasRole("MASTER")
+                            .requestMatchers("/jobs", "/jobs/**").hasAnyRole("MASTER", "EMPLOYEE")
                                 .anyRequest().authenticated()
                 ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
