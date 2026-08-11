@@ -18,7 +18,12 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Permite requisições de qualquer origem (domínio)
-        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedOrigins(List.of(
+                "https://foztalentos.com.br",
+                "http://localhost:3000",
+                "http://localhost:5500",
+                "http://127.0.0.1:5500"
+        ));
 
         // Verbos HTTP liberados
         configuration.setAllowedMethods(List.of(
