@@ -1,61 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="Vagas disponíveis na Foz Talentos."
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Vagas disponíveis na Foz Talentos.">
   <title>Vagas | Foz Talentos</title>
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
-  <link
-    rel="stylesheet"
-    href="styles.css"
-  >
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/vagas-interativas.css">
 </head>
 
 <body>
-
-  <!-- ======================================================
-       MENU DE NAVEGAÇÃO
-  ======================================================= -->
-
   <header class="header">
-
     <div class="container nav">
-
-      <a
-        class="logo"
-        href="index.html"
-      >
-        <img
-          src="img/logo-foz-talentos.png"
-          alt="Foz Talentos"
-        >
+      <a class="logo" href="index.html">
+        <img src="img/logo-foz-talentos.png" alt="Foz Talentos">
       </a>
 
       <button
@@ -75,222 +38,144 @@
         <a href="sobre.html">Sobre</a>
         <a href="servicos.html">Serviços</a>
         <a href="contato.html">Contato</a>
-
-        <a
-          class="admin-link"
-          href="admin-login.html"
-        >
-          Login ADM
-        </a>
+        <a href="vagas.html">Ver vagas</a>
+        <a class="admin-link" href="admin-login.html">Login ADM</a>
       </nav>
 
-      <a
-        class="button button-primary nav-cta"
-        href="vagas.html"
-      >
+      <a class="button button-primary nav-cta" href="vagas.html">
         Ver vagas
       </a>
-
     </div>
-
   </header>
 
-
-  <!-- ======================================================
-       CONTEÚDO PRINCIPAL
-  ======================================================= -->
-
   <main>
-
     <section class="section jobs">
-
       <div class="container jobs-layout">
 
-
-        <!-- ==================================================
-             BARRA LATERAL DE FILTROS
-        =================================================== -->
-
-        <aside class="jobs-sidebar">
-
-
-          <!-- Modalidade -->
-
+        <aside
+          class="jobs-sidebar"
+          id="jobsSidebar"
+          aria-label="Filtros de vagas"
+        >
+          <div class="mobile-filter-header">
+            <strong>Filtros</strong>
+            <button
+              class="mobile-filter-close"
+              id="mobileFilterClose"
+              type="button"
+              aria-label="Fechar filtros"
+            >×</button>
+          </div>
           <div class="filter-group">
-
             <h3>Modalidade</h3>
 
             <label>
-              <input
-                type="checkbox"
-                class="modalidade-filter"
-                value="Remoto"
-              >
-
+              <input type="checkbox" class="modalidade-filter" value="Remoto">
               Remoto
             </label>
 
             <label>
-              <input
-                type="checkbox"
-                class="modalidade-filter"
-                value="Presencial"
-              >
-
+              <input type="checkbox" class="modalidade-filter" value="Presencial">
               Presencial
             </label>
 
             <label>
-              <input
-                type="checkbox"
-                class="modalidade-filter"
-                value="Híbrido"
-              >
-
+              <input type="checkbox" class="modalidade-filter" value="Híbrido">
               Híbrido
             </label>
-
           </div>
-
 
           <hr>
 
-
-          <!-- Modelo de contrato -->
-
           <div class="filter-group">
-
             <h3>Modelo de contrato</h3>
 
             <label>
-              <input
-                type="checkbox"
-                class="contrato-filter"
-                value="Temporário"
-              >
-
+              <input type="checkbox" class="contrato-filter" value="Temporário">
               Temporário
             </label>
 
             <label>
-              <input
-                type="checkbox"
-                class="contrato-filter"
-                value="Efetivo"
-              >
-
+              <input type="checkbox" class="contrato-filter" value="Efetivo">
               Efetivo
             </label>
-
           </div>
-
 
           <hr>
 
+          <div class="filter-group">
+            <h3>Nível de experiência</h3>
 
-          <!-- Data de publicação -->
+            <label>
+              <input type="checkbox" class="experiencia-filter" value="Estágio">
+              Estágio
+            </label>
+
+            <label>
+              <input type="checkbox" class="experiencia-filter" value="Júnior">
+              Júnior
+            </label>
+
+            <label>
+              <input type="checkbox" class="experiencia-filter" value="Pleno">
+              Pleno
+            </label>
+
+            <label>
+              <input type="checkbox" class="experiencia-filter" value="Sênior">
+              Sênior
+            </label>
+
+            <label>
+              <input type="checkbox" class="experiencia-filter" value="Especialista">
+              Especialista
+            </label>
+          </div>
+
+          <hr>
 
           <div class="filter-group">
-
             <h3>Publicação</h3>
 
             <label>
-              <input
-                type="radio"
-                name="publicacao"
-                class="date-filter"
-                value=""
-                checked
-              >
-
+              <input type="radio" name="publicacao" class="date-filter" value="" checked>
               Todas
             </label>
 
             <label>
-              <input
-                type="radio"
-                name="publicacao"
-                class="date-filter"
-                value="today"
-              >
-
+              <input type="radio" name="publicacao" class="date-filter" value="today">
               Hoje
             </label>
 
             <label>
-              <input
-                type="radio"
-                name="publicacao"
-                class="date-filter"
-                value="7"
-              >
-
+              <input type="radio" name="publicacao" class="date-filter" value="7">
               Últimos 7 dias
             </label>
 
             <label>
-              <input
-                type="radio"
-                name="publicacao"
-                class="date-filter"
-                value="15"
-              >
-
+              <input type="radio" name="publicacao" class="date-filter" value="15">
               Últimos 15 dias
             </label>
 
             <label>
-              <input
-                type="radio"
-                name="publicacao"
-                class="date-filter"
-                value="30"
-              >
-
+              <input type="radio" name="publicacao" class="date-filter" value="30">
               Últimos 30 dias
             </label>
-
           </div>
-
 
           <hr>
 
-
-          <!-- Faixa salarial -->
-
           <div class="filter-group salary-filter-group">
-
             <h3>Faixa salarial</h3>
 
             <div class="salary-values">
-
-              <span id="salaryMinText">
-                R$ 0
-              </span>
-
-              <span id="salaryMaxText">
-                R$ 20.000
-              </span>
-
+              <span id="salaryMinText">R$ 0</span>
+              <span id="salaryMaxText">R$ 20.000</span>
             </div>
 
-
             <div class="double-range">
-
-              <!-- Linha cinza de fundo -->
-
               <div class="range-track"></div>
-
-
-              <!-- Parte azul da barra -->
-
-              <div
-                class="range-progress"
-                id="salaryRangeProgress"
-              ></div>
-
-
-              <!-- Ponto do salário mínimo -->
+              <div class="range-progress" id="salaryRangeProgress"></div>
 
               <input
                 type="range"
@@ -303,9 +188,6 @@
                 aria-label="Salário mínimo"
               >
 
-
-              <!-- Ponto do salário máximo -->
-
               <input
                 type="range"
                 id="salaryMaxFilter"
@@ -316,366 +198,186 @@
                 value="20000"
                 aria-label="Salário máximo"
               >
-
             </div>
-
-
-            <p class="salary-filter-help">
-              Arraste os pontos para definir a faixa salarial.
-            </p>
-
           </div>
 
-
-          <!-- Botão para limpar todos os filtros -->
-
-          <button
-            id="clearFilters"
-            class="btn-outline"
-            type="button"
-          >
+          <button id="clearFilters" class="btn-outline" type="button">
             Limpar filtros
           </button>
 
+          <button
+            id="applyMobileFilters"
+            class="button button-primary apply-mobile-filters"
+            type="button"
+          >
+            Aplicar filtros
+          </button>
         </aside>
 
+        <div
+          class="mobile-filter-backdrop"
+          id="mobileFilterBackdrop"
+          hidden
+        ></div>
 
-        <!-- ==================================================
-             LISTA DE VAGAS
-        =================================================== -->
+        <section class="jobs-browser" aria-label="Navegador de vagas">
 
-        <div class="jobs-content">
-
-
-          <!-- Filtros superiores -->
-
-          <div class="public-job-filters">
-
-
-            <!-- Estado -->
-            <div class="select-native-wrapper">
-
-            <select
-              id="publicStateFilter"
-              aria-label="Filtrar por estado"
-            >
-
-              <option value="">
-                Todos os estados
-              </option>
-
-              <option value="Acre">Acre</option>
-              <option value="Alagoas">Alagoas</option>
-              <option value="Amapá">Amapá</option>
-              <option value="Amazonas">Amazonas</option>
-              <option value="Bahia">Bahia</option>
-              <option value="Ceará">Ceará</option>
-
-              <option value="Distrito Federal">
-                Distrito Federal
-              </option>
-
-              <option value="Espírito Santo">
-                Espírito Santo
-              </option>
-
-              <option value="Goiás">Goiás</option>
-              <option value="Maranhão">Maranhão</option>
-
-              <option value="Mato Grosso">
-                Mato Grosso
-              </option>
-
-              <option value="Mato Grosso do Sul">
-                Mato Grosso do Sul
-              </option>
-
-              <option value="Minas Gerais">
-                Minas Gerais
-              </option>
-
-              <option value="Pará">Pará</option>
-              <option value="Paraíba">Paraíba</option>
-              <option value="Paraná">Paraná</option>
-              <option value="Pernambuco">Pernambuco</option>
-              <option value="Piauí">Piauí</option>
-
-              <option value="Rio de Janeiro">
-                Rio de Janeiro
-              </option>
-
-              <option value="Rio Grande do Norte">
-                Rio Grande do Norte
-              </option>
-
-              <option value="Rio Grande do Sul">
-                Rio Grande do Sul
-              </option>
-
-              <option value="Rondônia">Rondônia</option>
-              <option value="Roraima">Roraima</option>
-
-              <option value="Santa Catarina">
-                Santa Catarina
-              </option>
-
-              <option value="São Paulo">
-                São Paulo
-              </option>
-
-              <option value="Sergipe">Sergipe</option>
-              <option value="Tocantins">Tocantins</option>
-
-            </select>
-            </div>
-
-
-            <!-- Área de atuação -->
-            <div class="select-native-wrapper">
-
-            <select
-              id="publicAreaFilter"
-              aria-label="Filtrar por área"
-            >
-
-              <option value="">
-                Todas as áreas
-              </option>
-
-              <option value="Administrativo">
-                Administrativo
-              </option>
-
-              <option value="Atendimento">
-                Atendimento
-              </option>
-
-              <option value="Comercial">
-                Comercial
-              </option>
-
-              <option value="Contabilidade">
-                Contabilidade
-              </option>
-
-              <option value="Engenharia">
-                Engenharia
-              </option>
-
-              <option value="Financeiro">
-                Financeiro
-              </option>
-
-              <option value="Jurídico">
-                Jurídico
-              </option>
-
-              <option value="Logística">
-                Logística
-              </option>
-
-              <option value="Marketing">
-                Marketing
-              </option>
-
-              <option value="Produção">
-                Produção
-              </option>
-
-              <option value="Recursos Humanos">
-                Recursos Humanos
-              </option>
-
-              <option value="Saúde">
-                Saúde
-              </option>
-
-              <option value="Tecnologia da Informação">
-                Tecnologia da Informação
-              </option>
-
-              <option value="Vendas">
-                Vendas
-              </option>
-
-            </select>
-            </div>
-
-
-            <!-- Pesquisa -->
-
-            <input
-              id="publicSearch"
-              type="search"
-              placeholder="Pesquisar vaga, empresa ou cidade..."
-              aria-label="Pesquisar vagas"
-            >
-
-          </div>
-
-
-          <!-- Quantidade de vagas encontradas -->
-
-          <p
-            class="jobs-result-count"
-            id="jobsResultCount"
-          ></p>
-
-
-          <!-- Local onde os cards serão inseridos -->
-
-          <div
-            class="public-job-grid"
-            id="publicJobsList"
-          ></div>
-
-
-          <!-- Mensagem exibida quando não houver resultado -->
-
-          <div
-            class="empty-state"
-            id="publicEmptyState"
-            hidden
+          <button
+            class="mobile-filter-button"
+            id="mobileFilterButton"
+            type="button"
+            aria-controls="jobsSidebar"
+            aria-expanded="false"
           >
+            <span aria-hidden="true">☷</span>
+            Filtros
+          </button>
 
-            <h2>Nenhuma vaga disponível</h2>
+          <div class="jobs-toolbar">
+            <div class="select-native-wrapper">
+              <label class="sr-only" for="publicStateFilter">
+                Filtrar por estado
+              </label>
 
-            <p>
-              Não encontramos oportunidades com os filtros
-              selecionados.
-            </p>
+              <select id="publicStateFilter" aria-label="Filtrar por estado">
+                <option value="">Todos os estados</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+              </select>
+            </div>
 
+            <div class="select-native-wrapper">
+              <label class="sr-only" for="publicAreaFilter">
+                Filtrar por área
+              </label>
+
+              <select id="publicAreaFilter" aria-label="Filtrar por área">
+                <option value="">Todas as áreas</option>
+                <option value="Administrativo">Administrativo</option>
+                <option value="Atendimento">Atendimento</option>
+                <option value="Comercial">Comercial</option>
+                <option value="Contabilidade">Contabilidade</option>
+                <option value="Engenharia">Engenharia</option>
+                <option value="Financeiro">Financeiro</option>
+                <option value="Jurídico">Jurídico</option>
+                <option value="Logística">Logística</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Produção">Produção</option>
+                <option value="Recursos Humanos">Recursos Humanos</option>
+                <option value="Saúde">Saúde</option>
+                <option value="Tecnologia da Informação">Tecnologia da Informação</option>
+                <option value="Vendas">Vendas</option>
+              </select>
+            </div>
+
+            <div class="public-search-row">
+              <label class="sr-only" for="publicSearch">
+                Pesquisar vaga ou empresa
+              </label>
+
+              <input
+                id="publicSearch"
+                type="search"
+                placeholder="Pesquisar vaga ou empresa..."
+                autocomplete="off"
+                aria-label="Pesquisar vaga ou empresa"
+              >
+            </div>
           </div>
 
-        </div>
+          <div class="jobs-main-columns">
+            <section class="jobs-list-column" aria-label="Lista de vagas">
+              <div class="jobs-list-heading">
+                <p class="jobs-result-count" id="jobsResultCount"></p>
+              </div>
 
+              <div class="public-job-grid" id="publicJobsList"></div>
+
+              <div class="empty-state" id="publicEmptyState" hidden>
+                <h2>Nenhuma vaga disponível</h2>
+                <p>Não encontramos oportunidades com os filtros selecionados.</p>
+              </div>
+            </section>
+
+            <aside
+              class="job-details-panel"
+              id="jobDetailsPanel"
+              aria-live="polite"
+              aria-label="Detalhes da vaga"
+              hidden
+            ></aside>
+
+            <div
+              class="job-details-backdrop"
+              id="jobDetailsBackdrop"
+              hidden
+            ></div>
+          </div>
+        </section>
       </div>
-
     </section>
-
   </main>
 
-
-  <!-- ======================================================
-       RODAPÉ
-  ======================================================= -->
-
   <footer class="footer">
-
     <div class="container footer-grid">
-
       <div>
-
-        <a
-          class="logo footer-logo"
-          href="index.html"
-        >
-          <img
-            src="img/logo-foz-talentos-rodape.png"
-            alt="Foz Talentos"
-          >
+        <a class="logo footer-logo" href="index.html">
+          <img src="img/logo-foz-talentos-rodape.png" alt="Foz Talentos">
         </a>
 
-        <p>
-          Conectamos talentos às melhores oportunidades.
-        </p>
-
+        <p>Conectamos talentos às melhores oportunidades.</p>
       </div>
 
-
       <div>
-
         <strong>Navegação</strong>
-
         <a href="index.html">Início</a>
         <a href="sobre.html">Sobre</a>
         <a href="servicos.html">Serviços</a>
         <a href="vagas.html">Vagas</a>
         <a href="contato.html">Contato</a>
-
       </div>
-
 
       <div>
-
         <strong>Contato</strong>
-
         <span>(61) 98135-7318</span>
-        <span>Foztalentosoficial@gmail.com</span>
+        <span>Foztalentos@gmail.com</span>
         <span>Foz do Iguaçu - PR</span>
-
       </div>
-
     </div>
-
 
     <div class="container copyright">
       © 2026 Foz Talentos. Todos os direitos reservados.
     </div>
-
   </footer>
 
-
-  <!-- ======================================================
-       MODAL DE DETALHES DA VAGA
-  ======================================================= -->
-
-  <div
-    class="modal"
-    id="jobDetailsModal"
-    aria-hidden="true"
-  >
-
-    <div
-      class="modal-backdrop"
-      data-close-details
-    ></div>
-
-    <section
-      class="modal-card public-details"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="detailsTitle"
-    >
-
-      <div class="modal-header">
-
-        <div>
-
-          <span class="eyebrow">
-            DETALHES DA VAGA
-          </span>
-
-          <h2 id="detailsTitle"></h2>
-
-        </div>
-
-        <button
-          class="modal-close"
-          type="button"
-          data-close-details
-          aria-label="Fechar"
-        >
-          ×
-        </button>
-
-      </div>
-
-      <div id="jobDetailsContent"></div>
-
-    </section>
-
-  </div>
-
-
-  <!-- ======================================================
-       ARQUIVOS JAVASCRIPT
-  ======================================================= -->
-
-  <script src="js/vagas-service.js"></script>
-  <script src="js/vagas.js"></script>
+  <script type="module" src="js/vagas.js?v=2"></script>
   <script src="js/filtros-vagas.js"></script>
-
+  <script src="js/vagas-mobile.js"></script>
+  <script src="js/menu.js"></script>
 </body>
-
 </html>
