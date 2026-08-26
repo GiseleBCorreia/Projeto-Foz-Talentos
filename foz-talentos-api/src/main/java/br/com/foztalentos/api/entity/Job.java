@@ -3,7 +3,6 @@ package br.com.foztalentos.api.entity;
 import br.com.foztalentos.api.enums.ContractType;
 import br.com.foztalentos.api.enums.JobLevel;
 import br.com.foztalentos.api.enums.WorkMode;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,8 +14,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 // Entidade que representa a tabela "jobs" (vagas de emprego)
 @NoArgsConstructor

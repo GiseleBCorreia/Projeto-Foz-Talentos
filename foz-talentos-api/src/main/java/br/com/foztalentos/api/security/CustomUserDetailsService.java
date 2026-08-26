@@ -21,6 +21,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         Admin admin = adminRepository.findByEmail(email).orElseThrow(()
                 -> new UsernameNotFoundException("Admin not found."));
 
+        if (!admin.getActive()) {
+            throw new UsernameNotFoundException("Admin is deactivated.");
+        }
+
         return new CustomUserDetails(admin);
 
     }

@@ -7,11 +7,8 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
@@ -22,14 +19,6 @@ public class OpenApiConfig {
         final String securitySchemeName = "Bearer Authentication";
 
         return new OpenAPI()
-
-                // FORÇA O SWAGGER A USAR HTTPS
-                .servers(List.of(
-                        new Server()
-                                .url("https://foz-talentos-api-production.up.railway.app")
-                                .description("Production")
-                ))
-
                 .info(new Info()
                         .title("Foz Talentos API")
                         .version("1.0")

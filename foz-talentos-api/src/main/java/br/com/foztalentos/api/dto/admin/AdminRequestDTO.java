@@ -15,7 +15,6 @@ public record AdminRequestDTO(
         @NotBlank
         String email,
 
-        @NotBlank
         String password,
 
         @NotNull

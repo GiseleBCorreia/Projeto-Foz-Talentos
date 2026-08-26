@@ -26,6 +26,7 @@ public record JobResponseDTO(
         String phone,
         String email,
         String category,
+        String createdBy,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 

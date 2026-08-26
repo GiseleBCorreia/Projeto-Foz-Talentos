@@ -30,12 +30,21 @@ public class Category {
     @NotNull
     private LocalDateTime createdAt;
 
+    @NotNull
+    private LocalDateTime updatedAt;
+
     @OneToMany(mappedBy = "category")
     private List<Job> jobs = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
 }

@@ -48,6 +48,7 @@ public record JobRequestDTO(
         String phone,
 
         @Email
+        @NotBlank
         String email,
 
         @NotNull

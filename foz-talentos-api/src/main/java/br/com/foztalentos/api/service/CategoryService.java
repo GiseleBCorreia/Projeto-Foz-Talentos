@@ -9,6 +9,7 @@ import br.com.foztalentos.api.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 // Serviço de regras de negócio para gerenciamento de categorias de vagas
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -99,7 +101,8 @@ public class CategoryService {
                 category.getId(),
                 category.getName(),
                 category.getActive(),
-                category.getCreatedAt()
+                category.getCreatedAt(),
+                category.getUpdatedAt()
         );
     }
     

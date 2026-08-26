@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 // Serviço de regras de negócio para gerenciamento de administradores
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AdminService {
 
     private final AdminRepository adminRepository;
@@ -31,11 +33,14 @@ public class AdminService {
 
         Admin admin = new Admin();
 
-
         admin.setName(request.name());
         admin.setEmail(request.email());
         admin.setRole(request.role());
         admin.setActive(true);
+
+        if (request.password() == null || request.password().isBlank()) {
+            throw new BusinessException("Password is required for user creation.");
+        }
         admin.setPassword(passwordEncoder.encode(request.password()));
 
         // Impede cadastro duplicado de e-mail
@@ -115,6 +120,13 @@ public class AdminService {
 
     // Realiza a desativação lógica (soft delete) do administrador
     public void deactivate(Long id) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+
+        if (user.getAdmin().getId().equals(id)) {
+            throw new BusinessException("You cannot deactivate your own account.");
+        }
 
         Admin admin = adminRepository.findById(id).orElseThrow(()
                 -> new ResourceNotFoundException("Admin not found."));

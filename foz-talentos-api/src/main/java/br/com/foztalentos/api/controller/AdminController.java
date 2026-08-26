@@ -20,14 +20,14 @@ import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping(ApiRoutes.ADMINS)
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_MASTER')")
+@PreAuthorize("hasRole('MASTER')")
 @Tag(name = "Administradores")
 public class AdminController {
     
         private final AdminService adminService;
 
         // Lista administradores de forma paginada
-        @Operation(summary = "Listar adminsitrador")
+        @Operation(summary = "Listar administradores")
         @GetMapping
         public ResponseEntity<Page<AdminResponseDTO>> findAll(Pageable pageable) {
             Page<AdminResponseDTO> admins = adminService.findAll(pageable);

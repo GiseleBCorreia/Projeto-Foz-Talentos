@@ -67,7 +67,7 @@ public class CategoryController {
     }
 
     // Inativação de categoria
-    @Operation(summary = "Desativar categorias")
+    @Operation(summary = "Desativar categoria")
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<Void> deactivate(@PathVariable Long id) {
         categoryService.deactivate(id);
@@ -75,7 +75,7 @@ public class CategoryController {
     }
 
     // Ativação de categoria
-    @Operation(summary = "Reativar vaga")
+    @Operation(summary = "Reativar categoria")
     @PatchMapping("/{id}/activate")
     public ResponseEntity<Void> activate(@PathVariable Long id){
         categoryService.activate(id);

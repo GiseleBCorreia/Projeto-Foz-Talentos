@@ -16,9 +16,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
+
 // Filtro executado a cada requisição HTTP para interceptar e validar o Token JWT
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
@@ -69,16 +72,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                    System.out.println("USUARIO AUTENTICADO: "
-                            + authentication.getName());
-
-                    System.out.println("AUTORIDADES: "
-                            + authentication.getAuthorities());
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Cannot set user authentication", ex);
             SecurityContextHolder.clearContext();
         }
         filterChain.doFilter(request, response);

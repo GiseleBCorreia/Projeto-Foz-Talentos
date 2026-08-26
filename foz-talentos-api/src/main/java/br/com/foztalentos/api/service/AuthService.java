@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-// Serviço responsável pelo fluxo de autenticação e geração de tokens
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -18,13 +17,15 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    // Valida credenciais do usuário e retorna token JWT com dados básicos
     public LoginResponseDTO login(LoginRequestDTO request){
 
         Admin admin = adminRepository.findByEmail(request.email()).orElseThrow(()
                 -> new BusinessException("Invalid email or password."));
 
-        // Compara a senha informada com o hash salvo no banco
+        if (!admin.getActive()) {
+            throw new BusinessException("Account is deactivated.");
+        }
+
         if(!passwordEncoder.matches(
                 request.password(),
                 admin.getPassword()
@@ -32,7 +33,6 @@ public class AuthService {
             throw new BusinessException("Invalid email or password.");
         }
 
-        // Gera token assinado contendo email e permissões
         String token = jwtService.generateToken(admin);
 
         return new LoginResponseDTO(

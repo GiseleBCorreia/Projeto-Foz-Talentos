@@ -9,9 +9,14 @@ import br.com.foztalentos.api.exception.ResourceNotFoundException;
 import br.com.foztalentos.api.repository.CategoryRepository;
 import br.com.foztalentos.api.repository.JobRepository;
 import br.com.foztalentos.api.specification.JobSpecification;
+import br.com.foztalentos.api.entity.Admin;
+import br.com.foztalentos.api.security.CustomUserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
@@ -19,6 +24,7 @@ import java.time.LocalDateTime;
 // Serviço para gerenciamento e busca avançada de vagas de trabalho
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class JobService {
 
     private final JobRepository jobRepository;
@@ -27,10 +33,15 @@ public class JobService {
     // Cadastra uma nova vaga vinculada a uma categoria existente
     public JobResponseDTO create(JobRequestDTO request) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        Admin loggedAdmin = user.getAdmin();
+
         Category category = categoryRepository.findById(request.categoryId()).orElseThrow(()
                 -> new ResourceNotFoundException("Category not found."));
 
         Job job = new Job();
+        job.setCreatedBy(loggedAdmin);
 
         job.setTitle(request.title());
         job.setCompany(request.company());
@@ -46,9 +57,6 @@ public class JobService {
         job.setEmail(request.email());
         job.setCategory(category);
         job.setActive(true);
-        job.setCreatedAt(LocalDateTime.now());
-        job.setUpdatedAt(LocalDateTime.now());
-        job.setSalary(request.salary());
         job.setSalaryValue(request.salaryValue());
 
         Job savedJob = jobRepository.save(job);
@@ -102,7 +110,6 @@ public class JobService {
         job.setPhone(request.phone());
         job.setEmail(request.email());
         job.setCategory(category);
-        job.setSalary(request.salary());
         job.setSalaryValue(request.salaryValue());
 
         Job updatedJob = jobRepository.save(job);
@@ -155,6 +162,7 @@ public class JobService {
                 job.getPhone(),
                 job.getEmail(),
                 job.getCategory().getName(),
+                job.getCreatedBy() != null ? job.getCreatedBy().getName() : null,
                 job.getCreatedAt(),
                 job.getUpdatedAt()
         );
