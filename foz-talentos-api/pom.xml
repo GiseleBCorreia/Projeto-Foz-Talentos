@@ -53,10 +53,10 @@
 			<version>2.8.9</version>
 		</dependency>
 
-		<!-- MySQL -->
+		<!-- POSTGREESQL -->
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
