@@ -2,6 +2,7 @@ package br.com.foztalentos.api.service;
 
 import br.com.foztalentos.api.exception.TooManyRequestsException;
 import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.Instant;
 import java.util.Map;
@@ -14,6 +15,11 @@ public class LoginAttemptService {
     private static final long LOCK_DURATION_SECONDS = 15 * 60;
 
     private final Map<String, Attempt> attempts = new ConcurrentHashMap<>();
+
+    @Scheduled(fixedRate = 86400000) // Esvazia o mapa a cada 24h para evitar memory leak
+    public void clearAllAttempts() {
+        attempts.clear();
+    }
 
     public void checkAllowed(String email) {
         Attempt attempt = attempts.get(normalize(email));
