@@ -401,15 +401,15 @@ lista.addEventListener("click", async (event) => {
 
   if (
     botao.dataset.action === "delete" &&
-    confirm(`Deseja excluir a vaga “${vaga.titulo}”?`)
+    confirm(`Deseja desativar a vaga “${vaga.titulo}”?`)
   ) {
     try {
-      await VagasService.excluir(vaga.id);
-      mostrarToast("Vaga excluída.");
+      await VagasService.desativar(vaga.id);
+      mostrarToast("Vaga desativada.");
       renderizar();
     } catch (error) {
-      console.error("Erro ao excluir vaga:", error);
-      mostrarToast("Não foi possível excluir a vaga.");
+      console.error("Erro ao desativar vaga:", error);
+      mostrarToast("Não foi possível desativar a vaga.");
     }
   }
 });

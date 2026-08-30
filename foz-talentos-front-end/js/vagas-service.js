@@ -229,8 +229,11 @@ class VagasService {
     await this.carregarVagas();
   }
 
-  async excluir(id) {
-    await api.delete(`/jobs/${id}`, {
+  // Antes chamava DELETE /jobs/{id}. O botão da UI ainda diz "Excluir",
+  // mas agora só desativa a vaga (PATCH /jobs/{id}/deactivate), sem
+  // removê-la de fato.
+  async desativar(id) {
+    await api.patch(`/jobs/${id}/deactivate`, null, {
       headers: headersAutenticacao()
     });
     await this.carregarVagas();
