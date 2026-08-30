@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 // Controller para gerenciamento de administradores
 @RestController
@@ -29,7 +30,8 @@ public class AdminController {
         // Lista administradores de forma paginada
         @Operation(summary = "Listar administradores")
         @GetMapping
-        public ResponseEntity<Page<AdminResponseDTO>> findAll(Pageable pageable) {
+        public ResponseEntity<Page<AdminResponseDTO>> findAll(
+            @PageableDefault(size = 20, sort = "id") Pageable pageable) {
             Page<AdminResponseDTO> admins = adminService.findAll(pageable);
             return ResponseEntity.ok(admins);
         }

@@ -7,6 +7,6 @@ import java.util.Optional;
 
 // Repositório de dados para a entidade Admin
 public interface AdminRepository extends JpaRepository<Admin, Long> {
-    Optional<Admin> findByEmail(String email);
-    boolean existsByEmail(String email);
+    Optional<Admin> findByEmailIgnoreCase(String email);
+    boolean existsByEmailIgnoreCase(String email);
 }

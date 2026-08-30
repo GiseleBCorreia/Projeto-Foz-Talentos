@@ -34,10 +34,9 @@ public class OpenApiConfig {
                                 .email("contato@foztalentos.com"))
                         .license(new License().name("MIT")))
 
-                .addSecurityItem(new SecurityRequirement()
-                        .addList(securitySchemeName))
+                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+                 .components(new Components()
 
-                .components(new Components()
                         .addSecuritySchemes(
                                 securitySchemeName,
                                 new SecurityScheme()

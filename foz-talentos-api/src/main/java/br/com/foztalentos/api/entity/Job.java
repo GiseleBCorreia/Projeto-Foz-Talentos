@@ -24,11 +24,11 @@ import java.time.LocalDateTime;
 @Table(name = "jobs")
 public class Job {
     
-    @ManyToOne
-    @JoinColumn(name = "category_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
     private Admin createdBy;
 
@@ -37,49 +37,61 @@ public class Job {
     private Long id;
 
     @NotBlank
+    @Column(nullable = false, length = 160)
     private String title;
 
     @NotBlank
+    @Column(nullable = false, length = 160)
     private String company;
 
     @NotBlank
+    @Column(nullable = false, length = 80)
     private String state;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private ContractType contractType;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
     private JobLevel level;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private WorkMode workMode;
 
     @NotBlank
+    @Column(nullable = false, length = 120)
     private String salary;
 
-    @Column(nullable = true)
+    @Column(nullable = true, precision = 12, scale = 2)
     private BigDecimal salaryValue;
 
     @NotNull
     private Boolean active = true;
 
     @NotBlank
+    @Column(nullable = false, columnDefinition = "text")
     private String description;
 
     @NotBlank
+    @Column(nullable = false, columnDefinition = "text")
     private String requirements;
 
     @NotBlank
+    @Column(nullable = false, columnDefinition = "text")
     private String benefits;
 
     @NotBlank
+    @Column(nullable = false, length = 30)
     private String phone;
 
     @Email
     @NotBlank
+    @Column(nullable = false, length = 254)
     private String email;
 
     @NotNull

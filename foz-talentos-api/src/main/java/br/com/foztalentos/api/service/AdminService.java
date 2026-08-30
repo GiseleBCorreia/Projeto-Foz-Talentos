@@ -33,18 +33,22 @@ public class AdminService {
 
         Admin admin = new Admin();
 
-        admin.setName(request.name());
-        admin.setEmail(request.email());
+        String normalizedEmail = normalizeEmail(request.email());
+        admin.setName(request.name().trim());
+        admin.setEmail(normalizedEmail);
         admin.setRole(request.role());
         admin.setActive(true);
 
         if (request.password() == null || request.password().isBlank()) {
             throw new BusinessException("Password is required for user creation.");
         }
+        if (request.password().length() < 12 || request.password().length() > 72) {
+            throw new BusinessException("Password must contain between 12 and 72 characters.");
+        }
         admin.setPassword(passwordEncoder.encode(request.password()));
 
         // Impede cadastro duplicado de e-mail
-        if(adminRepository.existsByEmail(admin.getEmail())) {
+        if(adminRepository.existsByEmailIgnoreCase(normalizedEmail)) {
             throw new BusinessException("Email Already registered");
         }
 
@@ -97,18 +101,23 @@ public class AdminService {
         }
 
         // Valida se o novo e-mail já pertence a outro registro
-        Admin existing = adminRepository.findByEmail(request.email()).orElse(null);
+        String normalizedEmail = normalizeEmail(request.email());
+        Admin existing = adminRepository.findByEmailIgnoreCase(normalizedEmail).orElse(null);
 
         if (existing != null && !existing.getId().equals(id)) {
             throw new BusinessException("Email already registered.");
         }
 
-        admin.setName(request.name());
-        admin.setEmail(request.email());
+        admin.setName(request.name().trim());
+        admin.setEmail(normalizedEmail);
 
         // Atualiza a senha somente se um novo valor for enviado
         if (request.password() != null && !request.password().isBlank()) {
+            if (request.password().length() < 12 || request.password().length() > 72) {
+                throw new BusinessException("Password must contain between 12 and 72 characters.");
+            }
             admin.setPassword(passwordEncoder.encode(request.password()));
+            admin.setUpdatedAt(LocalDateTime.now());
         }
 
         admin.setUpdatedAt(LocalDateTime.now());
@@ -147,6 +156,10 @@ public class AdminService {
         admin.setUpdatedAt(LocalDateTime.now());
 
         adminRepository.save(admin);
+    }
+
+    private String normalizeEmail(String email) {
+        return email.trim().toLowerCase(java.util.Locale.ROOT);
     }
 
     // Converte a entidade Admin em DTO de resposta

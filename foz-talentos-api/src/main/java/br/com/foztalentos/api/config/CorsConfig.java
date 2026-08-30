@@ -17,7 +17,6 @@ public class CorsConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Permite requisições de qualquer origem (domínio)
         configuration.setAllowedOrigins(List.of(
                 "https://foztalentos.com.br",
                 "http://localhost:3000",
@@ -40,6 +39,7 @@ public class CorsConfig {
 
         // Autoriza o envio de cookies e tokens de autenticação
         configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
 
         // Aplica as regras acima para todas as rotas da API
         UrlBasedCorsConfigurationSource source =

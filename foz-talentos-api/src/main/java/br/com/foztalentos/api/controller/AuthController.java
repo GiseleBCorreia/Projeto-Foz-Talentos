@@ -4,6 +4,7 @@ import br.com.foztalentos.api.dto.login.LoginRequestDTO;
 import br.com.foztalentos.api.dto.login.LoginResponseDTO;
 import br.com.foztalentos.api.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class AuthController {
 
     // Recebe credenciais e retorna o token JWT
     @Operation(summary = "Realizar login", description = "Autentica um administrador e retorna um token JWT.")
+    @SecurityRequirements
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO request) {
         return ResponseEntity.ok(authService.login(request));

@@ -16,23 +16,32 @@ public class AuthService {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final LoginAttemptService loginAttemptService;
 
     public LoginResponseDTO login(LoginRequestDTO request){
+        String email = request.email().trim().toLowerCase(java.util.Locale.ROOT);
+        loginAttemptService.checkAllowed(email);
 
-        Admin admin = adminRepository.findByEmail(request.email()).orElseThrow(()
-                -> new BusinessException("Invalid email or password."));
+        Admin admin = adminRepository.findByEmailIgnoreCase(email).orElseThrow(()
+                -> {
+            loginAttemptService.loginFailed(email);
+            return new BusinessException("Invalid email or password.");
+        });
 
         if (!admin.getActive()) {
-            throw new BusinessException("Account is deactivated.");
+            loginAttemptService.loginFailed(email);
+            throw new BusinessException("Invalid email or password.");
         }
 
         if(!passwordEncoder.matches(
                 request.password(),
                 admin.getPassword()
         )){
+            loginAttemptService.loginFailed(email);
             throw new BusinessException("Invalid email or password.");
         }
 
+        loginAttemptService.loginSucceeded(email);
         String token = jwtService.generateToken(admin);
 
         return new LoginResponseDTO(

@@ -28,18 +28,20 @@ public class Admin  {
     private Long id;
 
     @NotBlank
+    @Column(nullable = false, length = 120)
     private String name;
 
     @Email
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 254)
     private String email;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String password;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private Role role;
 
     @Column(nullable = false)

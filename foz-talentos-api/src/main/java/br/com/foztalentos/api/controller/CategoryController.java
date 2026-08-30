@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 // Controller para gerenciamento de categorias de vagas
 @RestController
@@ -29,7 +30,8 @@ public class CategoryController {
     // Listagem paginada de categorias
     @Operation(summary = "Listar todas as categorias")
     @GetMapping
-    public ResponseEntity<Page<CategoryResponseDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<CategoryResponseDTO>> findAll(
+            @PageableDefault(size = 20, sort = "id") Pageable pageable) {
 
         Page<CategoryResponseDTO> categories = categoryService.findAll(pageable);
 

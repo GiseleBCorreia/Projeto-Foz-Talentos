@@ -66,7 +66,7 @@ public class JobSpecification {
             }
 
             if (filter.getPublishedBefore() != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), filter.getPublishedBefore().atTime(23,59,59)));
+                predicates.add(criteriaBuilder.lessThan(root.get("createdAt"), filter.getPublishedBefore().plusDays(1).atStartOfDay()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

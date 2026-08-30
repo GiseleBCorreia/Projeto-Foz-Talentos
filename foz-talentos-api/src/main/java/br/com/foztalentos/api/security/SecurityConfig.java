@@ -14,6 +14,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.http.MediaType;
+import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 
 // Classe principal de regras de segurança e autorização das rotas
 @Configuration
@@ -28,7 +33,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
 
-        http.cors(cors -> {}).csrf(csrf -> csrf.disable()).sessionManagement(session
+        AuthenticationEntryPoint authenticationEntryPoint = (request, response, exception) -> {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.getWriter().write("{\"timestamp\":\"" + LocalDateTime.now() + "\",\"status\":401,\"message\":\"Authentication is required.\",\"path\":\"" + request.getRequestURI().replace("\\", "\\\\").replace("\"", "\\\"") + "\"}");
+        };
+        AccessDeniedHandler accessDeniedHandler = (request, response, exception) -> {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.getWriter().write("{\"timestamp\":\"" + LocalDateTime.now() + "\",\"status\":403,\"message\":\"You do not have permission to access this resource.\",\"path\":\"" + request.getRequestURI().replace("\\", "\\\\").replace("\"", "\\\"") + "\"}");
+        };
+
+        http.cors(cors -> {}).csrf(csrf -> csrf.disable()).exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
+                .sessionManagement(session
                         -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
                                         "/auth/login",

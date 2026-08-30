@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.Objects;
 
 // Serviço responsável por criar, decodificar e validar tokens JWT
 @Service
@@ -31,8 +34,15 @@ public class JwtService {
     // Gera um novo token JWT com subject (e-mail) e claim de papel (role)
     public String generateToken(Admin admin) {
 
+        Date now = new Date();
+        LocalDateTime credentialsUpdatedAt = admin.getUpdatedAt() != null ? admin.getUpdatedAt() : LocalDateTime.now();
+        long credentialsVersion = credentialsUpdatedAt
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli();
         return Jwts.builder().subject(admin.getEmail()).claim("role", admin.getRole().name())
-                .issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + expiration))
+                .claim("cv", credentialsVersion)
+                .issuedAt(now).expiration(new Date(now.getTime() + expiration))
                 .signWith(getKey()).compact();
 
     }
@@ -53,8 +63,17 @@ public class JwtService {
         Claims claims = Jwts.parser().verifyWith(getKey())
                 .build().parseSignedClaims(token).getPayload();
 
-        return claims.getSubject().equals(admin.getEmail())
-                && claims.getExpiration().after(new Date());
+        LocalDateTime credentialsUpdatedAt = admin.getUpdatedAt() != null ? admin.getUpdatedAt() : LocalDateTime.MIN;
+        long expectedVersion = credentialsUpdatedAt
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli();
+        Number tokenVersion = claims.get("cv", Number.class);
+        boolean versionMatches = tokenVersion == null || tokenVersion.longValue() == expectedVersion;
+        return Objects.equals(claims.getSubject(), admin.getEmail())
+                && claims.getExpiration() != null
+                && claims.getExpiration().after(new Date())
+                && versionMatches;
 
     }
 

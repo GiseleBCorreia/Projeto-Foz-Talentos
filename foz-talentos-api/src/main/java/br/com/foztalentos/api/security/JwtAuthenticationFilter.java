@@ -54,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 
-                Admin admin = adminRepository.findByEmail(email).orElse(null);
+                Admin admin = adminRepository.findByEmailIgnoreCase(email.trim().toLowerCase(java.util.Locale.ROOT)).orElse(null);
 
             // Se o admin não existir ou estiver desativado, interrompe a autenticação
                 if (admin == null || !admin.getActive()) {

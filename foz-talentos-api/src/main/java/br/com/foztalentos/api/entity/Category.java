@@ -23,8 +23,10 @@ public class Category {
     private Long id;
 
     @NotBlank
+    @Column(nullable = false, unique = true, length = 80)
     private String name;
 
+    @Column(nullable = false)
     private Boolean active = true;
 
     @NotNull

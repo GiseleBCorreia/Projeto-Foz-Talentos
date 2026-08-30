@@ -16,14 +16,12 @@ import java.time.LocalDate;
 public class JobFilterDTO {
     private String search;
     private String states;
-    private Long categoryId;
-    private ContractType contractType;
+    private Long categoryId;    private ContractType contractType;
     private JobLevel level;
     private WorkMode workMode;
     private LocalDate publishedAfter;
     private LocalDate publishedBefore;
     private BigDecimal minSalary;
     private BigDecimal maxSalary;
-
 
 }

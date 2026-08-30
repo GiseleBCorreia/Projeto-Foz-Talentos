@@ -27,10 +27,11 @@ public class CategoryService {
 
         Category category = new Category();
 
+        String normalizedName = normalizeName(request.name());
         category.setActive(true);
-        category.setName(request.name());
+        category.setName(normalizedName);
 
-        if (categoryRepository.existsByNameIgnoreCase(request.name())) {
+        if (categoryRepository.existsByNameIgnoreCase(normalizedName)) {
             throw new BusinessException("Category already exists");
         }
 
@@ -59,15 +60,16 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
 
+        String normalizedName = normalizeName(request.name());
         Category existing = categoryRepository
-                .findByNameIgnoreCase(request.name())
+                .findByNameIgnoreCase(normalizedName)
                 .orElse(null);
 
         if (existing != null && !existing.getId().equals(id)) {
             throw new BusinessException("Category already exists.");
         }
 
-        category.setName(request.name());
+        category.setName(normalizeName(request.name()));
 
         Category updatedCategory = categoryRepository.save(category);
 
@@ -92,6 +94,10 @@ public class CategoryService {
         category.setActive(true);
 
         categoryRepository.save(category);
+    }
+
+    private String normalizeName(String name) {
+        return name.trim().replaceAll("\\s+", " ");
     }
 
     // Converte a entidade Category para DTO de resposta

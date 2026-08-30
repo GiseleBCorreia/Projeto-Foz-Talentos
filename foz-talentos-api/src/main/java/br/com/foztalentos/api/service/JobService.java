@@ -39,6 +39,9 @@ public class JobService {
 
         Category category = categoryRepository.findById(request.categoryId()).orElseThrow(()
                 -> new ResourceNotFoundException("Category not found."));
+        if (!Boolean.TRUE.equals(category.getActive())) {
+            throw new ResourceNotFoundException("Category not found.");
+        }
 
         Job job = new Job();
         job.setCreatedBy(loggedAdmin);
@@ -83,6 +86,9 @@ public class JobService {
 
         Job job = jobRepository.findById(id).orElseThrow(()
                 -> new ResourceNotFoundException("Job not found."));
+        if (!Boolean.TRUE.equals(job.getActive())) {
+            throw new ResourceNotFoundException("Job not found.");
+        }
 
         return toResponseDTO(job);
 
@@ -96,6 +102,9 @@ public class JobService {
 
         Category category = categoryRepository.findById(request.categoryId()).orElseThrow(()
                 -> new ResourceNotFoundException("Category not found."));
+        if (!Boolean.TRUE.equals(category.getActive())) {
+            throw new ResourceNotFoundException("Category not found.");
+        }
 
         job.setTitle(request.title());
         job.setCompany(request.company());
