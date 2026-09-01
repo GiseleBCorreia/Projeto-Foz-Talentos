@@ -19,6 +19,7 @@ public class CorsConfig {
 
         configuration.setAllowedOrigins(List.of(
                 "https://foztalentos.com.br",
+                "https://fozzzz.netlify.app",
                 "http://localhost:3000",
                 "http://localhost:5500",
                 "http://127.0.0.1:5500"

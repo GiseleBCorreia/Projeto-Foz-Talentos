@@ -6,6 +6,7 @@ public final class ApiRoutes {
     public static final String ADMINS = "/admins";
     public static final String JOBS = "/jobs";
     public static final String CATEGORIES = "/categories";
+    public static final String HEALTH = "/health";
 
     // Construtor privado para impedir instanciação da classe utilitária
     private ApiRoutes() {
