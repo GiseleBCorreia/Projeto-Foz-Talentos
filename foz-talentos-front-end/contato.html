@@ -26,7 +26,6 @@
         <a href="sobre.html">Sobre</a>
         <a href="servicos.html">Serviços</a>
         <a href="contato.html">Contato</a>
-        <a href="vagas.html">Vagas</a>
         <a class="admin-link" href="admin-login.html">Login ADM</a>
       </nav>
 
@@ -57,7 +56,21 @@
         >
           <label>Nome<input type="text" name="Nome" placeholder="Seu nome" required></label>
           <label>E-mail<input type="email" name="Email" placeholder="voce@email.com" required></label>
-          <label>Telefone<input type="tel" name="Telefone" placeholder="(61) 98135-7318"></label>
+          <label>
+            Telefone
+            <input
+              type="tel"
+              name="Telefone"
+              id="telefone"
+              placeholder="(61) 98135-7318"
+              inputmode="numeric"
+              autocomplete="tel"
+              maxlength="15"
+              required
+              pattern="\(\d{2}\) \d{4,5}-\d{4}"
+              title="Digite um telefone válido com DDD. Exemplo: (61) 98135-7318"
+            >
+          </label>
           <label>Mensagem<textarea name="Mensagem" rows="5" placeholder="Como podemos ajudar?" required></textarea></label>
 
           <input type="hidden" name="_subject" value="Nova mensagem pelo site Foz Talentos">

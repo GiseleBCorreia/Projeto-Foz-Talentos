@@ -1,6 +1,25 @@
 const contactForm = document.getElementById("contact-form");
 const formMessage = document.getElementById("form-message");
 const submitButton = document.getElementById("submit-button");
+const telefoneInput = document.getElementById("telefone");
+
+telefoneInput.addEventListener("input", function () {
+  let numeros = this.value.replace(/\D/g, "");
+
+  if (numeros.length > 11) {
+    numeros = numeros.slice(0, 11);
+  }
+
+  if (numeros.length <= 10) {
+    numeros = numeros.replace(/^(\d{2})(\d)/, "($1) $2");
+    numeros = numeros.replace(/(\d{4})(\d)/, "$1-$2");
+  } else {
+    numeros = numeros.replace(/^(\d{2})(\d)/, "($1) $2");
+    numeros = numeros.replace(/(\d{5})(\d)/, "$1-$2");
+  }
+
+  this.value = numeros;
+});
 
 contactForm.addEventListener("submit", async function (event) {
   event.preventDefault();

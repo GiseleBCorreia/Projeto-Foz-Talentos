@@ -1,4 +1,5 @@
-"use strict";
+import VagasService from "./vagas-service.js";
+
 
 const autenticado =
   sessionStorage.getItem("fozAdminAutenticado") === "true" ||
@@ -302,7 +303,7 @@ function validarCamposObrigatorios() {
   return true;
 }
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (!form.checkValidity()) {
@@ -359,19 +360,27 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  if (campos.id.value) {
-    VagasService.atualizar(campos.id.value, dados);
-    mostrarToast("Vaga atualizada com sucesso.");
-  } else {
-    VagasService.criar(dados);
-    mostrarToast("Vaga cadastrada com sucesso.");
-  }
+  try {
+    if (campos.id.value) {
+      await VagasService.atualizar(campos.id.value, dados);
+      mostrarToast("Vaga atualizada com sucesso.");
+    } else {
+      await VagasService.criar(dados);
+      mostrarToast("Vaga cadastrada com sucesso.");
+    }
 
-  fecharModal();
-  renderizar();
+    fecharModal();
+    renderizar();
+  } catch (error) {
+    console.error("Erro ao salvar vaga:", error);
+    formMessage.textContent =
+      error.response?.data?.message ||
+      "Não foi possível salvar a vaga. Tente novamente.";
+    formMessage.className = "form-message form-message-error";
+  }
 });
 
-lista.addEventListener("click", (event) => {
+lista.addEventListener("click", async (event) => {
   const botao =
     event.target.closest("button[data-action]");
 
@@ -392,11 +401,16 @@ lista.addEventListener("click", (event) => {
 
   if (
     botao.dataset.action === "delete" &&
-    confirm(`Deseja excluir a vaga “${vaga.titulo}”?`)
+    confirm(`Deseja desativar a vaga “${vaga.titulo}”?`)
   ) {
-    VagasService.excluir(vaga.id);
-    mostrarToast("Vaga excluída.");
-    renderizar();
+    try {
+      await VagasService.desativar(vaga.id);
+      mostrarToast("Vaga desativada.");
+      renderizar();
+    } catch (error) {
+      console.error("Erro ao desativar vaga:", error);
+      mostrarToast("Não foi possível desativar a vaga.");
+    }
   }
 });
 
@@ -427,4 +441,16 @@ document
     window.location.replace("admin-login.html");
   });
 
-renderizar();
+async function iniciarPainel() {
+  try {
+    await VagasService.carregarVagas();
+    renderizar();
+  } catch (error) {
+    console.error("Erro ao carregar painel:", error);
+    vazio.hidden = false;
+    vazio.querySelector("h2").textContent = "Erro ao carregar vagas";
+    vazio.querySelector("p").textContent = "Não foi possível buscar as vagas na API.";
+  }
+}
+
+iniciarPainel();
