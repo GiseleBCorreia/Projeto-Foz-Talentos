@@ -148,13 +148,19 @@ p {
   margin-right: auto;
 }
 
+
+
 .header .logo img {
-  width: 150px;
-  max-width: 150px;
-  max-height: 58px;
-  height: auto;
-  object-fit: contain;
+    display: block;
+    width: 130px;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    object-fit: unset;
+    flex-shrink: 0;
 }
+
+
 
 .nav-links {
   display: flex;
