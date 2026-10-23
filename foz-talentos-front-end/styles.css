@@ -5000,3 +5000,16 @@ p {
     flex: 0 0 auto;
   }
 }
+
+/* Ícones da seção de contato */
+.contact-info a,
+.contact-info span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-icon {
+  flex-shrink: 0;
+  color: #075BEE;
+}
