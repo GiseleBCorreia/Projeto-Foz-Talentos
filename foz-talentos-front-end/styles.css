@@ -5013,3 +5013,20 @@ p {
   flex-shrink: 0;
   color: #075BEE;
 }
+
+
+/* Ícones SVG dos serviços */
+.service-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #075BEE;
+}
+
+.service-icon svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
