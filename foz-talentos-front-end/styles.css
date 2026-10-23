@@ -120,93 +120,91 @@ p {
   color: var(--blue) !important;
 }
 
+
 /* =========================================================
    CABEÇALHO E NAVEGAÇÃO
 ========================================================= */
 
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  width: 100%;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
 }
 
 .header .nav {
-  height: 72px;
-  display: flex;
-  align-items: center;
-  gap: 34px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.logo {
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
-  margin-right: auto;
-}
-
-
-
-.header .logo img {
-    display: block;
-    width: 130px;
-    height: auto;
-    max-width: none;
-    max-height: none;
-    object-fit: unset;
+.header .logo {
     flex-shrink: 0;
 }
 
-
+.header .logo img,
+.logo-menu {
+    display: block;
+    width: 180px;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    flex-shrink: 0;
+}
 
 .nav-links {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  font-size: 0.92rem;
-  font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-left: auto;
 }
 
 .nav-links a:hover {
-  color: var(--blue);
+    color: var(--blue);
 }
 
 .admin-link {
-  color: var(--blue) !important;
-  font-weight: 800 !important;
+    color: var(--blue) !important;
+    font-weight: 800 !important;
 }
 
 .admin-link.active {
-  position: relative;
+    position: relative;
 }
 
 .admin-link.active::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -10px;
-  left: 0;
-  height: 2px;
-  border-radius: 999px;
-  background: var(--blue);
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -10px;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--blue);
 }
 
 .menu-button {
-  display: none;
-  border: 0;
-  background: transparent;
+    display: none;
+    border: 0;
+    background: transparent;
 }
 
 .menu-button span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  margin: 5px;
-  background: var(--text);
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 5px;
+    background: var(--text);
 }
+
 
 /* =========================================================
    BOTÕES
@@ -724,12 +722,11 @@ p {
   margin: 0 0 2px;
 }
 
-.footer .footer-logo img {
-  width: 145px;
-  max-width: 145px;
-  max-height: 54px;
-  height: auto;
-  object-fit: contain;
+.footer-logo img {
+    width: 160px;
+    height: auto;
+    display: block;
+    object-fit: contain;
 }
 
 .copyright {
